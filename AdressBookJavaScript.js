@@ -105,7 +105,13 @@ let AddressBook = new Array();
 function AddContact(firstName, lastName, address, city, state, zip, phoneNumber, email) {
     try {
         let newcontact = new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email);
-        AddressBook.push(newcontact);
+        // UC7 Checks for Duplicate contacts.
+        if (AddressBook.find(person => person.firstName == newcontact.firstName && person.email == newcontact.email)) {
+            throw "Contact Already Exists.";
+        } else {
+            AddressBook.push(newcontact);
+            console.log("Contact Added Successfully.");
+        }
     }
     catch (e) {
         console.error(e);
@@ -121,6 +127,11 @@ function DeleteContact(firstName, mobileNumber)
             AddressBook.splice(index, 1 );
         }
     }
+}
+// UC6 Gets Count of Contact in Address Book.
+function CountContact(){
+    let addressBookCount = AddressBook.reduce((count) => count= count + 1, 0);
+    console.log("Contact Count is: " + addressBookCount);
 }
 function Main() {
   console.log("Welcome to address book");
@@ -164,3 +175,4 @@ function Main() {
   AddressBook.forEach(contact=>console.log(contact.toString()));
 }
 Main();
+CountContact();
